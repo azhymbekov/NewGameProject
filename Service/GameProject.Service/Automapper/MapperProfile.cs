@@ -16,11 +16,15 @@ namespace GameProject.Service.Automapper
             CreateMap<Word, WordModel>()
                 .ForMember(x => x.TryCount,
                     opt => opt.MapFrom(x => x.SecretWord.Length - 2));
-            CreateMap<WordModel, Word>();
+
+            CreateMap<WordModel, Word>()
+                .ForMember(x => x.Id, opt => opt.Ignore()); ;
 
 
             CreateMap<User, UserModel>();
-            CreateMap<UserModel, User>();
+
+            CreateMap<UserModel, User>()
+                .ForMember(x => x.Id, opt => opt.Ignore()); 
         }
     }
 }

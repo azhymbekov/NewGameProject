@@ -73,9 +73,7 @@ namespace GameProject.Service.UserService
         public async Task PrepeareUserForEditAsync(UserModel model)
         {
             var user = await userManager.FindByIdAsync(model.Id.ToString());
-
-            user.UserName = model.UserName;
-            user.FullName = model.FullName;
+            mapper.Map(model,user);
 
             await userManager.UpdateAsync(user);
             await unitOfWork.SaveChangesAsync();
@@ -83,15 +81,8 @@ namespace GameProject.Service.UserService
 
         public async Task<UserModel> PrepeareUserForEditViewAsync(Guid? id)
         {
-            var user = (from u in userManager.Users
-                where u.Id == id
-                select new UserModel
-                {
-                    Id = u.Id,
-                    UserName = u.UserName,
-                    FullName = u.FullName
-                }).FirstOrDefault();
-            return user;
+            var user = await userManager.FindByIdAsync(id.ToString());
+            return mapper.Map<UserModel>(user);
           
         }
 

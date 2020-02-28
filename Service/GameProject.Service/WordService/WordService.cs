@@ -75,8 +75,9 @@ namespace GameProject.Service.WordService
             }
             else
             {
-                word.SecretWord = model.SecretWord;
-                word.Question = model.Question;
+                mapper.Map(model, word);
+                //word.SecretWord = model.SecretWord;
+                //word.Question = model.Question;
             }
 
             await unitOfWork.SaveChangesAsync();
