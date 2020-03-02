@@ -37,7 +37,7 @@ namespace GameProject.Service.WordService
 
         public IEnumerable<WordModel> GetWords()
         {
-            return this.mapper.ProjectTo<WordModel>(unitOfWork.Word.AllAsNoTracking());
+            return this.mapper.ProjectTo<WordModel>(unitOfWork.Word.All());
         }
 
         public async Task RemoveAsync(Guid id)

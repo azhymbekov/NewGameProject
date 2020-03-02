@@ -23,6 +23,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameProject", "Web\GameProj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameProject.Common", "GameProject.Common\GameProject.Common.csproj", "{04CD3BBB-ECCE-4D2E-8DE8-C8A88C527F1F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{F7AF39A3-8981-42B5-AF11-E371FA1115EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameProject.Test", "GameProject.Test\GameProject.Test.csproj", "{64518EA0-5793-4572-96D4-D3A47C5BFE2F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +61,10 @@ Global
 		{04CD3BBB-ECCE-4D2E-8DE8-C8A88C527F1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04CD3BBB-ECCE-4D2E-8DE8-C8A88C527F1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04CD3BBB-ECCE-4D2E-8DE8-C8A88C527F1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64518EA0-5793-4572-96D4-D3A47C5BFE2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64518EA0-5793-4572-96D4-D3A47C5BFE2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64518EA0-5793-4572-96D4-D3A47C5BFE2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64518EA0-5793-4572-96D4-D3A47C5BFE2F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +76,7 @@ Global
 		{DFEE2496-BC96-4320-9554-740F837C9A9F} = {922C1124-5281-406D-A08E-61B0D0A64E82}
 		{EB99218A-FD31-4B9D-90A9-DC0BCC02530A} = {922C1124-5281-406D-A08E-61B0D0A64E82}
 		{394C01EE-EA11-4EA7-A85D-0549558B5D3E} = {7801C945-2630-4EC1-BA54-34DC17EBE8D0}
+		{64518EA0-5793-4572-96D4-D3A47C5BFE2F} = {F7AF39A3-8981-42B5-AF11-E371FA1115EB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1A0D160E-BAA9-4A24-B202-DFC7EBDAF7CB}
