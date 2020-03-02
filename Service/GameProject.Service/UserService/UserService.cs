@@ -10,6 +10,7 @@ using GameProject.Service.Common.UserService;
 using GameProject.Service.Common.UserService.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using ProjectGame.Data.Common.Repositories;
 
 namespace GameProject.Service.UserService
@@ -19,12 +20,14 @@ namespace GameProject.Service.UserService
         private readonly IUnitOfWork unitOfWork;
         private readonly UserManager<User> userManager;
         private readonly IMapper mapper;
+        private readonly ILogger<UserService> logger;
 
-        public UserService(IUnitOfWork unitOfWork, UserManager<User> userManager, RoleManager<Role> roleManager, IMapper mapper)
+        public UserService(IUnitOfWork unitOfWork, UserManager<User> userManager, ILogger<UserService> logger, IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
             this.userManager = userManager;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
         public async Task<IEnumerable<UserModel>> GetUsersAsync()
@@ -45,45 +48,62 @@ namespace GameProject.Service.UserService
 
         public async Task<OperationResult> CreateAsync(UserModel model)
         {
-            var user = await userManager.Users.FirstOrDefaultAsync(x => x.UserName == model.UserName);
             var result = new OperationResult();
-            if (user == null)
+            try
             {
-               var newUser = mapper.Map<User>(model);
-               newUser.Id = Guid.NewGuid();
+                var user = await userManager.Users.FirstOrDefaultAsync(x => x.UserName == model.UserName);
+
+                if (user == null)
+                {
+                    var newUser = mapper.Map<User>(model);
+                    newUser.Id = Guid.NewGuid();
 
 
-               var registerResult = await userManager.CreateAsync(newUser, model.Password);
+                    var registerResult = await userManager.CreateAsync(newUser, model.Password);
 
-               
-               if (registerResult.Succeeded)
-               {
-                   await userManager.AddToRoleAsync(newUser, GlobalConstants.Roles.Player);
-                   result.Succeeded = true;
-               }               
+
+                    if (registerResult.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(newUser, GlobalConstants.Roles.Player);
+                        result.Succeeded = true;
+                    }
+                }
+                else
+                {
+                    result.Message = "Игрок с таким логином уже существует";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                result.Message = "Игрок с таким логином уже существует";
+                logger.LogError($"Exception: {ex.GetType().ToString()}; Сообщение об ошибке: {ex.Message}; StackTrace: {ex.StackTrace}");
+                result.Message = "Ошибка при добавлении игрока";
             }
+            
 
             return result;
         }
 
         public async Task PrepeareUserForEditAsync(UserModel model)
         {
-            var user = await userManager.FindByIdAsync(model.Id.ToString());
-            mapper.Map(model,user);
+            try
+            {
+                var user = await userManager.FindByIdAsync(model.Id.ToString());
+                mapper.Map(model, user);
 
-            await userManager.UpdateAsync(user);
-            await unitOfWork.SaveChangesAsync();
+                await userManager.UpdateAsync(user);
+                await unitOfWork.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Exception: {ex.GetType()}; Сообщение об ошибке: {ex.Message}; StackTrace: {ex.StackTrace}");
+            }
+           
         }
 
         public async Task<UserModel> PrepeareUserForEditViewAsync(Guid? id)
         {
             var user = await userManager.FindByIdAsync(id.ToString());
             return mapper.Map<UserModel>(user);
-          
         }
 
 
