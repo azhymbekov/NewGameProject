@@ -107,7 +107,7 @@ namespace GameProject.Service.GameService
                 wordList.Remove(element);
             }
 
-            return stack.ToList();
+            return stack;
         }
 
 

@@ -34,8 +34,6 @@ namespace ProjectGame.Data.Common.Repositories
 
         Task<int> SaveChangesAsync();
 
-        Task<int> SaveChangesAsync(Guid currentUserId);
-
         Task LoadRelatedCollections(TEntity entity, params Expression<Func<TEntity, IEnumerable<object>>>[] properties);
 
         Task LoadRelatedReferences(TEntity entity, params Expression<Func<TEntity, object>>[] properties);
