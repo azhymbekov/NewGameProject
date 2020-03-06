@@ -30,11 +30,15 @@ namespace GameProject.Data.Migrations
 
                     b.Property<Guid>("WordId");
 
+                    b.Property<Guid?>("WordId1");
+
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
                     b.HasIndex("WordId");
+
+                    b.HasIndex("WordId1");
 
                     b.ToTable("Matches");
                 });
@@ -111,6 +115,8 @@ namespace GameProject.Data.Migrations
                     b.Property<string>("PhoneNumber");
 
                     b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<int>("Rating");
 
                     b.Property<string>("SecurityStamp");
 
@@ -222,10 +228,14 @@ namespace GameProject.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("GameProject.Data.Models.Game.Word", "Word")
+                    b.HasOne("GameProject.Data.Models.Game.Word")
                         .WithMany("Matches")
                         .HasForeignKey("WordId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("GameProject.Data.Models.Game.Word", "Word")
+                        .WithMany()
+                        .HasForeignKey("WordId1");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

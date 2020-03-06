@@ -1,0 +1,27 @@
+﻿@model IEnumerable<GameProject.Service.Common.UserService.Models.UserInfoModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Рейтинг игроков</h1>
+
+<p>
+    <a asp-action="Create">Создать игрока</a>
+</p>
+<table class="table">
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

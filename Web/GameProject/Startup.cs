@@ -111,6 +111,12 @@ namespace GameProject
                 app.UseHsts();
             }
 
+            app.UseCors(builder => builder
+                .AllowCredentials()
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowAnyOrigin());
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

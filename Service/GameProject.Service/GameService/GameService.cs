@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using AutoMapper;
 using GameProject.Data.Models.Game;
+using GameProject.Data.Models.Users;
 using GameProject.Service.Common.GameService;
 using GameProject.Service.Common.WordService.Models;
+using Microsoft.AspNetCore.Identity;
 using ProjectGame.Data.Common.Repositories;
 
 namespace GameProject.Service.GameService
@@ -14,13 +16,16 @@ namespace GameProject.Service.GameService
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
+        private readonly UserManager<User> userManager;
 
         public GameService(
+            UserManager<User> userManager,
             IUnitOfWork unitOfWork,
             IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
+            this.userManager = userManager;
         }
 
         public IEnumerable<WordModel> GetRandomWords()
@@ -40,6 +45,7 @@ namespace GameProject.Service.GameService
 
         public WordModel CheckWord(ref IEnumerable<WordModel> wordModels, string secretText, string letterOrWord, Guid userId)
         {
+            var currentUser = userManager.Users.FirstOrDefault(x => x.Id == userId);
             var words = wordModels.ToList();
             if (words.Count > 0)
             {
@@ -63,6 +69,7 @@ namespace GameProject.Service.GameService
                     words.RemoveAt(0);
                     match.Result = true;
                     unitOfWork.Match.Add(match);
+                    currentUser.Rating++;
                     unitOfWork.SaveChangesAsync();
 
                     if (words.Count > 0)
@@ -79,6 +86,7 @@ namespace GameProject.Service.GameService
                     {
                         //lose
                         match.Result = false;
+                        currentUser.Rating--;
                         unitOfWork.Match.Add(match);
                         unitOfWork.SaveChangesAsync();
                         throw new ArgumentOutOfRangeException();
@@ -120,6 +128,7 @@ namespace GameProject.Service.GameService
                 {
                     //MatchResult = true
                     return null;
+                    
                 }
                 else
                 {

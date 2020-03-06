@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GameProject.Data.Migrations
 {
-    public partial class initialcreate : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -43,7 +43,8 @@ namespace GameProject.Data.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    FullName = table.Column<string>(nullable: true)
+                    FullName = table.Column<string>(nullable: true),
+                    Rating = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -176,7 +177,8 @@ namespace GameProject.Data.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
                     WordId = table.Column<Guid>(nullable: false),
-                    Result = table.Column<bool>(nullable: false)
+                    Result = table.Column<bool>(nullable: false),
+                    WordId1 = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -193,6 +195,12 @@ namespace GameProject.Data.Migrations
                         principalTable: "Words",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Matches_Words_WordId1",
+                        column: x => x.WordId1,
+                        principalTable: "Words",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -243,6 +251,11 @@ namespace GameProject.Data.Migrations
                 name: "IX_Matches_WordId",
                 table: "Matches",
                 column: "WordId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Matches_WordId1",
+                table: "Matches",
+                column: "WordId1");
 
             FillDefaultRoles(migrationBuilder);
         }

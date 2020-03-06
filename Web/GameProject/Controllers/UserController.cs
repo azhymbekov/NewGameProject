@@ -80,5 +80,13 @@ namespace GameProject.Controllers
             await userService.RemoveAsync(id);
             return RedirectToAction("Index", "User");
         }
+
+        [HttpGet]
+        [Authorize(Roles = GlobalConstants.Roles.Administrator)]
+        public async Task<IActionResult> Rating()
+        {
+            var users = await userService.GetUsersRatingAsync();
+            return View(users);
+        }
     }
 }

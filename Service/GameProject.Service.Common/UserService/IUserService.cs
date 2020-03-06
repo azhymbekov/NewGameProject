@@ -10,6 +10,8 @@ namespace GameProject.Service.Common.UserService
     {
         Task<IEnumerable<UserModel>> GetUsersAsync();
 
+        Task<IEnumerable<UserInfoModel>> GetUsersRatingAsync();
+
         Task RemoveAsync(Guid id);
 
         Task<OperationResult> CreateAsync(UserModel model);

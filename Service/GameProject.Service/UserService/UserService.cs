@@ -135,9 +135,17 @@ namespace GameProject.Service.UserService
                 }
             }
 
+            await unitOfWork.SaveChangesAsync();
+
             userInfoModel.GameCount = userInfoModel.CountOfWin + userInfoModel.CountOfLose;
 
             return userInfoModel;
+        }
+
+        public async Task<IEnumerable<UserInfoModel>> GetUsersRatingAsync()
+        {
+            var users = await userManager.GetUsersInRoleAsync(GlobalConstants.Roles.Player);
+            return users.Select(x => mapper.Map<UserInfoModel>(x)).OrderByDescending(x=>x.Rating);
         }
     }
 }

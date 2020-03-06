@@ -24,7 +24,10 @@ namespace GameProject.Service.Automapper
             CreateMap<User, UserModel>();
 
             CreateMap<UserModel, User>()
-                .ForMember(x => x.Id, opt => opt.Ignore()); 
+                .ForMember(x => x.Id, opt => opt.Ignore());
+
+
+            CreateMap<User, UserInfoModel>();
         }
     }
 }

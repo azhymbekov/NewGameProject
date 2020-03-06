@@ -10,6 +10,8 @@ namespace GameProject.Data.Models.Users
     {
         public string FullName { get; set; }
 
+        public int Rating { get; set; }
+
         public ICollection<Match> Matches { get; set; }
     }
 }

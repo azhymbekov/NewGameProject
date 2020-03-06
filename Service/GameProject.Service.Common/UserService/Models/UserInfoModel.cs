@@ -15,5 +15,7 @@ namespace GameProject.Service.Common.UserService.Models
         public int CountOfLose { get; set; }
 
         public int GameCount { get; set; }
+
+        public int Rating { get; set; }
     }
 }
